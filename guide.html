@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>自転車タイヤのサイズ表記の読み方と買い間違いパターン｜サイズ換算＆適合診断ツール ガイド</title>
+<meta name="description" content="自転車タイヤの側面に刻まれたサイズ表記（インチ／フランス式／ETRTO）の読み方を解説。「26インチ同士でも付かない」理由、分数と小数の違い、WO／HEの区別、チューブとバルブの選び方まで、買い間違いが多いパターンを具体例で紹介します。">
+<link rel="canonical" href="https://mini-tools-lab.github.io/bicycle-tire/guide.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="自転車タイヤ・チューブ サイズ換算＆適合診断ツール">
+<meta property="og:title" content="自転車タイヤのサイズ表記の読み方と買い間違いパターン">
+<meta property="og:description" content="「26インチなのに付かない」のはなぜ？ ETRTOの見方、分数と小数の罠、WO／HEの区別、チューブとバルブの選び方を解説。">
+<meta property="og:url" content="https://mini-tools-lab.github.io/bicycle-tire/guide.html">
+<meta name="twitter:card" content="summary">
+<style>
+:root{
+--bg:#f3f5f0; --surface:#ffffff; --surface2:#eef3ec; --text:#1a2e28; --muted:#5b6b64; --line:#dde5dc;
+--primary:#0f766e; --primary-dark:#0b5e57; --primary-soft:#e0f2ef; --accent:#e86a33; --accent-soft:#fff0e6;
+--radius:18px; --shadow:0 4px 24px rgba(20,50,40,.08);
+}
+@media (prefers-color-scheme: dark){
+:root{ --bg:#101613; --surface:#1a211e; --surface2:#232d28; --text:#e8f0ec; --muted:#9db0a6; --line:#2e3a34; --primary:#2dd4bf; --primary-dark:#2dd4bf; --primary-soft:#14332f; --accent:#fb923c; --accent-soft:#3a2415; --shadow:0 4px 24px rgba(0,0,0,.35);}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic UI","Yu Gothic",Meiryo,sans-serif;line-height:1.8}
+h1,h2,h3{font-family:"Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;font-weight:700;line-height:1.4;margin:0}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 48px}
+.hero{padding:8px 2px 6px}
+.hero h1{font-size:27px;letter-spacing:.02em}
+.hero h1 span{color:var(--primary)}
+.hero p{color:var(--muted);margin:10px 0 0;font-size:15px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-top:16px;box-shadow:var(--shadow)}
+.card h2{font-size:19px;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.card h3{font-size:16px;margin:18px 0 6px;color:var(--primary-dark)}
+.card p{margin:8px 0}
+.card ul,.card ol{margin:8px 0;padding-left:22px}
+.card li{margin:5px 0}
+.num{width:28px;height:28px;border-radius:50%;background:var(--primary-soft);color:var(--primary);display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.example{background:var(--surface2);border-radius:14px;padding:14px 16px;margin:12px 0}
+.example p{margin:4px 0}
+.tbl-wrap{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;min-width:480px;font-size:14px}
+th,td{border:1px solid var(--line);padding:9px 10px;text-align:left}
+th{background:var(--primary-soft);color:var(--text);text-align:center;white-space:nowrap}
+.warn{background:var(--accent-soft);border:1.5px dashed #f0b48a;border-radius:14px;padding:14px 16px;margin:12px 0}
+.warn p{margin:5px 0}
+.btn{display:inline-block;border:0;border-radius:12px;padding:13px 20px;font-weight:700;cursor:pointer;background:var(--primary);color:#fff;text-decoration:none;text-align:center;min-height:44px}
+.btn:hover{background:var(--primary-dark)}
+.cta{margin-top:22px;text-align:center}
+.cta .btn{width:100%;max-width:420px}
+.backlink{font-size:14px}
+.backlink a,footer a{color:var(--primary);font-weight:700}
+footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
+.note{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<p class="backlink"><a href="index.html">← サイズ換算＆適合診断ツールに戻る</a></p>
+<h1>タイヤサイズ表記の<span>読み方</span>と<br>買い間違いパターン</h1>
+<p>「26インチのタイヤを買ったのに付かなかった」——自転車タイヤのサイズは、表記の仕組みを知らないとほぼ必ず迷います。3つの表記体系の違いと、間違いやすいパターンを解説します。</p>
+</header>
+
+<section class="card">
+<h2><span class="num">1</span> サイズはタイヤの側面に刻まれている</h2>
+<p>交換用タイヤを選ぶときの出発点は、<strong>今ついているタイヤの側面（サイドウォール）を見ること</strong>です。メーカー名や模様と一緒に、サイズ表記が刻印（エンボス）されています。汚れて読みにくい場合は、タイヤを少しずつ回しながら探してみてください。前輪・後輪とも同じサイズが基本です。</p>
+<p>多くのタイヤには、複数の表記が併記されています。</p>
+<div class="example">
+<p>・ママチャリの例：<strong>26×1 3/8</strong> と <strong>37-590</strong></p>
+<p>・ロードバイクの例：<strong>700×28C</strong> と <strong>28-622</strong></p>
+<p>・MTBの例：<strong>26×2.10</strong> と <strong>54-559</strong></p>
+</div>
+<p>この「○○-○○○」という数字の組み合わせが、次に説明するETRTO表記で、<strong>適合を判断するのに一番確実な表記</strong>です。表記が読めたら、<a href="index.html">ツール</a>に入力すれば適合チューブまで分かります。</p>
+</section>
+
+<section class="card">
+<h2><span class="num">2</span> 3つの表記体系と、決め手になるETRTO</h2>
+
+<h3>① インチ表記（英式・米式）</h3>
+<p>「26×1 3/8」「26×1.75」のように、タイヤの外径の目安（インチ）×幅で表します。ママチャリなど英式のタイヤは<strong>分数</strong>（1 3/8など）、MTBなど米式のタイヤは<strong>小数</strong>（1.75など）で書かれるのが特徴です。歴史的に地域ごとに育った表記なので、<strong>同じ「26インチ」でも中身がバラバラ</strong>という問題を抱えています。</p>
+
+<h3>② フランス表記</h3>
+<p>「700×32C」「650×47B」のように、外径の目安（mm）×幅＋記号で表します。ロードバイクの700Cが代表例です。末尾のA／B／Cはもともとタイヤの太さの区分でしたが、今では<strong>リム径を区別する記号</strong>として働いています（700C＝リム径622mm、700B＝635mm、650B＝584mm、650C＝571mm、650A＝590mm）。</p>
+
+<h3>③ ETRTO表記（国際規格）</h3>
+<p>「37-590」のように、<strong>タイヤ幅（mm）− リム径（ビード座径・mm）</strong>をミリ数だけで表す国際規格です。前の数字が幅、後ろの数字がタイヤがはまるリムの直径を表します。</p>
+<div class="warn">
+<p><strong>適合の決め手は、後ろのリム径が「完全一致」すること。</strong></p>
+<p>幅は多少変えられる場合がありますが、リム径が1mmでも違えばタイヤは付きません（無理にはめた場合は走行中に外れる危険があります）。購入時はインチ表記ではなく、ETRTOのリム径を基準に選ぶのが鉄則です。</p>
+</div>
+</section>
+
+<section class="card">
+<h2><span class="num">3</span> 買い間違いが多いパターン</h2>
+
+<h3>パターン1：「26インチ」の罠（いちばん多い）</h3>
+<p>「26インチ」と呼ばれるタイヤには、リム径が違うものが<strong>5種類</strong>あります。代表例が、ママチャリの「26×1 3/8」（リム径590mm）と、MTBの「26×1.75」（リム径559mm）で、差は31mmもあります。どちらも「26インチ」ですが、まったく互換性がありません。</p>
+<div class="tbl-wrap">
+<table>
+<tr><th>表記</th><th>ETRTO</th><th>リム径</th><th>主な自転車</th></tr>
+<tr><td>26×1.50〜2.25（小数）</td><td>40-559 など</td><td>559mm</td><td>MTB、シティサイクル</td></tr>
+<tr><td>26×1 3/4（シュウィン）</td><td>47-571</td><td>571mm</td><td>米国の古いクルーザー（650Cと同径）</td></tr>
+<tr><td>26×1 1/2</td><td>37-584</td><td>584mm</td><td>650B（今の27.5インチと同径）</td></tr>
+<tr><td>26×1 3/8</td><td>37-590</td><td>590mm</td><td>ママチャリ（650A）</td></tr>
+<tr><td>26×1 1/4</td><td>32-597</td><td>597mm</td><td>古い英式スポーツ車</td></tr>
+</table>
+</div>
+
+<h3>パターン2：分数と小数は「同じ数字でも別物」</h3>
+<p>1 3/4 と 1.75 は計算上は同じ数ですが、タイヤの規格としては別物です（26×1 3/4はリム径571mm、26×1.75は559mm）。<strong>分数表記のタイヤと小数表記のタイヤは互換性がない</strong>、と覚えておくのが安全です。</p>
+
+<h3>パターン3：27インチと27.5インチと700C</h3>
+<p>名前が似ていますが、27インチ（リム径630mm）、27.5インチ＝650B（584mm）、700C（622mm）はすべて別規格です。昔のスポーツ車の27インチに700Cのタイヤは付きません。また29インチMTB（29er）は700Cと同じリム径622mmで、呼び方が違うだけです。</p>
+
+<h3>パターン4：「28インチ」の3つの顔</h3>
+<p>28インチには、700C（622mm）、28×1 1/2＝700B（635mm）、古いオランダ式の28×1 3/8（642mm）の3種類があります。欧州のシティバイクでよく見かけます。</p>
+
+<h3>パターン5：子ども用・小径車の「同じインチ」</h3>
+<p>20インチには小数表記（リム径406mm）と20×1 3/8（451mm）、16インチには小数表記（305mm）と16×1 3/8（349mm、折りたたみ自転車用）があります。子どもの自転車とミニベロで間違えやすいポイントです。</p>
+
+<h3>パターン6：WOとHEの区別（ママチャリ系）</h3>
+<p>ママチャリ系の分数表記タイヤは <strong>WO（ワイヤードオン）</strong>、MTBや子ども用の小数表記タイヤは <strong>HE（ビードクリンチャー）</strong> という、タイヤとリムの接合方式の規格が違います。リム径が近くても、WOとHEの間には互換性がありません。タイヤ側面や商品説明の「WO／HE」表記も合わせて確認してください。</p>
+
+<p class="note">なお、同じ表記でもメーカーによってETRTOの幅が数mm違うことがあります（例：700×35Cは37-622が一般的ですが、35-622の製品もあります）。幅の数mmの差は装着可否には影響しにくい一方、リム径の違いは致命的です。迷ったらリム径を最優先にしてください。</p>
+</section>
+
+<section class="card">
+<h2><span class="num">4</span> チューブとバルブの選び方</h2>
+<p>チューブは、タイヤと違って1つの製品が幅の範囲をカバーします。選び方のポイントは3つです。</p>
+<ol>
+<li><strong>リム径が一致すること</strong>：チューブの表記（ETRTOや「700×○○C」など）の中に、今のタイヤと同じリム径が含まれていること。</li>
+<li><strong>適応幅にタイヤ幅が入っていること</strong>：たとえばタイヤが700×28Cなら、「700×25-32C」のような範囲表記のチューブを選びます。ママチャリ系は「26×1 3/8」のようにタイヤと同じ表記の専用チューブが売られています。</li>
+<li><strong>バルブ形式がリムの穴に合うこと</strong>：バルブ（空気を入れる口）には3種類あります。</li>
+</ol>
+<div class="tbl-wrap">
+<table>
+<tr><th>バルブ形式</th><th>見分け方</th><th>多い自転車</th></tr>
+<tr><td>英式（ウッズバルブ）</td><td>細い金属の口に、ゴムキャップ。虫ゴムを使う</td><td>ママチャリ、シティサイクル、子ども用</td></tr>
+<tr><td>仏式（プレスタバルブ）</td><td>一番細い。先端の小さなナットを緩めて空気を入れる</td><td>ロードバイク、クロスバイク</td></tr>
+<tr><td>米式（シュレーダーバルブ）</td><td>太くて短い。自動車やバイクと同じ形</td><td>MTB、子ども用、BMX</td></tr>
+</table>
+</div>
+<p>バルブ穴の太さが違うため、<strong>細い仏式の穴に英式・米式のバルブは入りません</strong>。逆に、仏式バルブは太い穴にも（がたつきに注意しつつ）使える場合があります。迷ったときは、今ついているチューブと同じバルブ形式を選ぶのが確実です。空気入れ（ポンプ）の口金がバルブ形式に対応しているかも合わせて確認してください。</p>
+<p><a href="index.html">ツール</a>では、タイヤの表記を選ぶと適合するチューブの表記とバルブ形式の目安も一緒に表示されます。</p>
+</section>
+
+<div class="cta">
+<a class="btn" href="index.html">🚲 サイズ換算＆適合診断ツールを使ってみる（無料）</a>
+</div>
+
+<footer>本ページの換算値は、メーカー各社のサイズ表をもとにした一般的な目安です。最終的にはタイヤ側面のETRTO表記で確認してください。<br><a href="index.html">自転車タイヤ・チューブ サイズ換算＆適合診断ツール</a></footer>
+</div>
+</body>
+</html>

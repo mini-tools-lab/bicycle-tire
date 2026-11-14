@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>自転車タイヤ・チューブ サイズ換算＆適合診断ツール｜26×1 3/8・700C・ETRTO対応</title>
+<meta name="description" content="自転車タイヤのサイズ表記（インチ／フランス式／ETRTO）を相互換算し、適合するチューブとバルブ形式が分かる無料ツール。「26インチなのに付かない」の原因はリム径の違い。タイヤ側面の表記を選ぶだけで、買い間違いを防げます。登録不要。">
+<link rel="canonical" href="https://mini-tools-lab.github.io/bicycle-tire/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="自転車タイヤ・チューブ サイズ換算＆適合診断ツール">
+<meta property="og:title" content="自転車タイヤ・チューブ サイズ換算＆適合診断ツール">
+<meta property="og:description" content="インチ／フランス式／ETRTOの相互換算と、適合チューブ・バルブ形式の診断。同じ「26インチ」でもリム径が違う罠を警告します。登録不要・無料。">
+<meta property="og:url" content="https://mini-tools-lab.github.io/bicycle-tire/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自転車タイヤ・チューブ サイズ換算＆適合診断ツール">
+<meta name="twitter:description" content="タイヤの表記を選ぶだけ。ETRTO換算・適合チューブ・「同じインチで互換なし」の警告まで。登録不要・無料。">
+<style>
+:root{
+--bg:#f3f5f0; --surface:#ffffff; --surface2:#eef3ec; --text:#1a2e28; --muted:#5b6b64; --line:#dde5dc;
+--primary:#0f766e; --primary-dark:#0b5e57; --primary-soft:#e0f2ef; --accent:#e86a33; --accent-soft:#fff0e6;
+--danger:#dc2626; --ok:#15803d; --radius:18px; --shadow:0 4px 24px rgba(20,50,40,.08);
+}
+@media (prefers-color-scheme: dark){
+:root{ --bg:#101613; --surface:#1a211e; --surface2:#232d28; --text:#e8f0ec; --muted:#9db0a6; --line:#2e3a34; --primary:#2dd4bf; --primary-dark:#2dd4bf; --primary-soft:#14332f; --accent:#fb923c; --accent-soft:#3a2415; --shadow:0 4px 24px rgba(0,0,0,.35);}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic UI","Yu Gothic",Meiryo,sans-serif;line-height:1.6}
+button,input,select{font:inherit;min-height:44px}
+h1,h2{font-family:"Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;font-weight:700;line-height:1.3;margin:0}
+.wrap{max-width:980px;margin:0 auto;padding:20px 16px 48px}
+.hero{padding:8px 2px 18px}
+.hero h1{font-size:32px;font-weight:900;letter-spacing:.02em}
+.hero h1 span{color:var(--primary)}
+.hero p{color:var(--muted);margin:8px 0 0;font-size:15px;max-width:640px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.card h2{font-size:18px;display:flex;align-items:center;gap:8px}
+.num{width:28px;height:28px;border-radius:50%;background:var(--primary-soft);color:var(--primary);display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.hint{font-size:13px;color:var(--muted);margin:6px 0 12px}
+.field{margin-bottom:12px}
+.field label{font-size:13px;font-weight:700;display:block;margin-bottom:5px}
+input,select{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface);color:var(--text);width:100%}
+input:focus,select:focus{outline:2px solid var(--primary);outline-offset:1px;border-color:transparent}
+.btn{border:0;border-radius:12px;padding:10px 16px;font-weight:700;cursor:pointer;background:var(--primary);color:#fff;white-space:nowrap;width:100%}
+.btn:hover{background:var(--primary-dark)}
+.row{display:flex;gap:8px}
+.row>div{flex:1}
+.result-card{margin-top:16px}
+.etrto-big{font-size:34px;font-weight:900;letter-spacing:.02em;line-height:1.2}
+.etrto-big span{color:var(--primary)}
+.spec-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:15px}
+.spec-table th,.spec-table td{border:1px solid var(--line);padding:9px 10px;text-align:left}
+.spec-table th{background:var(--primary-soft);white-space:nowrap;width:34%;font-size:13px}
+.warn{background:var(--accent-soft);border:1.5px dashed #f0b48a;border-radius:14px;padding:14px;margin-top:14px}
+.warn strong{color:var(--accent)}
+.warn ul{margin:8px 0 0;padding-left:20px}
+.warn li{margin:4px 0}
+.tube-box{background:var(--surface2);border-radius:14px;padding:14px 16px;margin-top:14px}
+.tube-box p{margin:4px 0}
+.empty{color:var(--muted);text-align:center;padding:20px 8px;font-size:14px;border:1.5px dashed var(--line);border-radius:12px}
+.note{font-size:13px;color:var(--muted)}
+footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
+footer a{color:var(--primary);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<h1>自転車タイヤ・チューブ<br><span>サイズ換算</span>＆適合診断ツール</h1>
+<p>タイヤ側面の表記を選ぶだけで、インチ／フランス式／ETRTOの換算と、適合するチューブ・バルブ形式が分かります。「26インチ同士なのに付かない」買い間違いも、リム径の違いから警告します。</p>
+</header>
+
+<div class="grid">
+<!-- From marking -->
+<section class="card">
+<h2><span class="num">1</span> 表記から探す</h2>
+<p class="hint">今ついているタイヤの側面に刻印された表記に一番近いものを選んでください。どれか1つの表記が分かればOKです。</p>
+<div class="field"><label for="cat-select">自転車の種類</label><select id="cat-select"></select></div>
+<div class="field"><label for="size-select">タイヤの表記</label><select id="size-select"></select></div>
+</section>
+
+<!-- From ETRTO -->
+<section class="card">
+<h2><span class="num">2</span> ETRTOの数字から探す</h2>
+<p class="hint">「37-590」のような数字が読める場合はこちらが確実です。前がタイヤ幅、後ろがリム径（ビード座径）です。</p>
+<div class="row">
+<div class="field"><label for="etrto-w">タイヤ幅（mm）</label><input id="etrto-w" type="number" inputmode="numeric" min="10" max="130" placeholder="例：37"></div>
+<div class="field"><label for="etrto-bsd">リム径（mm）</label><input id="etrto-bsd" type="number" inputmode="numeric" min="100" max="700" placeholder="例：590"></div>
+</div>
+<button class="btn" id="etrto-btn">この数字で診断する</button>
+<p class="note" id="etrto-msg" style="margin-top:10px"></p>
+</section>
+</div>
+
+<!-- Result -->
+<section class="card result-card" aria-live="polite">
+<h2><span class="num">3</span> 診断結果</h2>
+<div id="result"></div>
+</section>
+
+<footer>換算データはメーカー各社のサイズ表をもとにした一般的な目安です。製品ごとに幅の表記が数mm異なることがあるため、購入前には必ずタイヤ側面のETRTO表記（特に後ろのリム径）を確認してください。<br><a href="guide.html">📖 使い方ガイド：タイヤサイズ表記の読み方と買い間違いパターン</a></footer>
+</div>
+
+<script>
+/*DATA-START*/
+var SIZES = [
+{"id":"wo24","cat":"mamachari","nom":"24","inch":"24×1 3/8","french":"","w":37,"bsd":540,"type":"WO","tube":"24×1 3/8 チューブ","valve":"英式","note":"32-540と刻印された製品もあります。幅が違うので、現物のETRTOを必ず確認してください。"},
+{"id":"wo26","cat":"mamachari","nom":"26","inch":"26×1 3/8","french":"650×35A","w":37,"bsd":590,"type":"WO","tube":"26×1 3/8 チューブ","valve":"英式","note":"日本のママチャリで最も多いサイズです。"},
+{"id":"wo27","cat":"mamachari","nom":"27","inch":"27×1 3/8","french":"","w":37,"bsd":630,"type":"WO","tube":"27×1 3/8 チューブ（27×1 1/4と共通のものも多い）","valve":"英式","note":""},
+{"id":"wo27q","cat":"mamachari","nom":"27","inch":"27×1 1/4","french":"","w":32,"bsd":630,"type":"WO","tube":"27×1 1/4 チューブ（27×1 3/8と共通のものも多い）","valve":"英式","note":"昔のスポーツ車・ランドナーなどに多いサイズです。"},
+{"id":"wo28h","cat":"mamachari","nom":"28","inch":"28×1 1/2","french":"700×40B","w":40,"bsd":635,"type":"WO","tube":"28×1 1/2 チューブ","valve":"英式","note":"実用車やオランダ式自転車のサイズです。700C（622）とは別物です。"},
+{"id":"kids14","cat":"kids","nom":"14","inch":"14×1.75","french":"","w":47,"bsd":254,"type":"HE","tube":"14×1.75 チューブ","valve":"英式が多い","note":""},
+{"id":"kids16","cat":"kids","nom":"16","inch":"16×1.75","french":"","w":47,"bsd":305,"type":"HE","tube":"16×1.75 チューブ","valve":"英式が多い","note":""},
+{"id":"kids18","cat":"kids","nom":"18","inch":"18×1.75","french":"","w":47,"bsd":355,"type":"HE","tube":"18×1.75 チューブ","valve":"英式が多い","note":""},
+{"id":"kids20","cat":"kids","nom":"20","inch":"20×1.75","french":"","w":47,"bsd":406,"type":"HE","tube":"20×1.75 チューブ（20×1.50-1.75表記のものも）","valve":"英式・米式","note":""},
+{"id":"kids22","cat":"kids","nom":"22","inch":"22×1.75","french":"","w":47,"bsd":456,"type":"HE","tube":"22×1.75 チューブ","valve":"英式が多い","note":""},
+{"id":"kids24","cat":"kids","nom":"24","inch":"24×1.75","french":"","w":47,"bsd":507,"type":"HE","tube":"24×1.75 チューブ","valve":"英式・米式","note":""},
+{"id":"jr24","cat":"kids","nom":"24","inch":"24×2.10","french":"","w":54,"bsd":507,"type":"HE","tube":"24×1.95-2.40 チューブ","valve":"米式が多い","note":"ジュニアMTBなどに多いサイズです。"},
+{"id":"mini16","cat":"minivelo","nom":"16","inch":"16×1 3/8","french":"","w":37,"bsd":349,"type":"","tube":"16×1 3/8 チューブ","valve":"仏式・米式が多い","note":"35-349と刻印された製品もあります。折りたたみ自転車（ブロンプトンなど）のサイズです。"},
+{"id":"mini20","cat":"minivelo","nom":"20","inch":"20×1 3/8","french":"","w":37,"bsd":451,"type":"","tube":"20×1 3/8 チューブ","valve":"仏式・米式が多い","note":"小数表記の20インチ（リム径406）とは別物です。"},
+{"id":"road23","cat":"road","nom":"700","inch":"","french":"700×23C","w":23,"bsd":622,"type":"","tube":"700×18-25C チューブ","valve":"仏式","note":""},
+{"id":"road25","cat":"road","nom":"700","inch":"","french":"700×25C","w":25,"bsd":622,"type":"","tube":"700×18-25C チューブ","valve":"仏式","note":""},
+{"id":"road28","cat":"road","nom":"700","inch":"","french":"700×28C","w":28,"bsd":622,"type":"","tube":"700×25-32C チューブ","valve":"仏式","note":""},
+{"id":"road30","cat":"road","nom":"700","inch":"","french":"700×30C","w":30,"bsd":622,"type":"","tube":"700×25-32C チューブ","valve":"仏式","note":""},
+{"id":"road32","cat":"road","nom":"700","inch":"","french":"700×32C","w":32,"bsd":622,"type":"","tube":"700×25-32C チューブ（700×32-47Cでも可）","valve":"仏式","note":""},
+{"id":"road35","cat":"road","nom":"700","inch":"28×1.40","french":"700×35C","w":37,"bsd":622,"type":"","tube":"700×32-47C チューブ","valve":"仏式","note":"35-622と刻印された製品もあります（メーカーによる表記の差）。決め手はリム径622です。"},
+{"id":"road38","cat":"road","nom":"700","inch":"28×1.50","french":"700×38C","w":40,"bsd":622,"type":"","tube":"700×32-47C チューブ","valve":"仏式","note":"38-622と刻印された製品もあります（IRCなど）。決め手はリム径622です。"},
+{"id":"road40","cat":"road","nom":"700","inch":"28×1.60","french":"700×40C","w":42,"bsd":622,"type":"","tube":"700×32-47C チューブ","valve":"仏式","note":"40-622と刻印された製品もあります（IRCなど）。決め手はリム径622です。"},
+{"id":"road45","cat":"road","nom":"700","inch":"","french":"700×45C","w":47,"bsd":622,"type":"","tube":"700×32-47C チューブ","valve":"仏式","note":""},
+{"id":"gb38","cat":"gravel","nom":"650","inch":"27.5×1.50","french":"650×38B","w":38,"bsd":584,"type":"","tube":"27.5×1.50-2.10 チューブ","valve":"仏式が多い","note":""},
+{"id":"gb47","cat":"gravel","nom":"650","inch":"27.5×1.85","french":"650×47B","w":47,"bsd":584,"type":"","tube":"27.5×1.75-2.40 チューブ","valve":"仏式が多い","note":""},
+{"id":"gb210","cat":"gravel","nom":"27.5","inch":"27.5×2.10","french":"","w":54,"bsd":584,"type":"","tube":"27.5×1.90-2.40 チューブ","valve":"米式・仏式","note":""},
+{"id":"gb225","cat":"gravel","nom":"27.5","inch":"27.5×2.25","french":"","w":57,"bsd":584,"type":"","tube":"27.5×1.90-2.40 チューブ","valve":"米式・仏式","note":"55-584と刻印された製品もあります（メーカーによる表記の差）。決め手はリム径584です。"},
+{"id":"mtb150","cat":"mtb26","nom":"26","inch":"26×1.50","french":"","w":40,"bsd":559,"type":"HE","tube":"26×1.50-2.125 チューブ","valve":"米式・仏式","note":""},
+{"id":"mtb175","cat":"mtb26","nom":"26","inch":"26×1.75","french":"","w":47,"bsd":559,"type":"HE","tube":"26×1.50-2.125 チューブ","valve":"米式・英式もあり","note":"シティサイクルにも使われます。ママチャリの26×1 3/8（リム径590）とは互換性がありません。"},
+{"id":"mtb195","cat":"mtb26","nom":"26","inch":"26×1.95","french":"","w":50,"bsd":559,"type":"HE","tube":"26×1.50-2.125 チューブ","valve":"米式・仏式","note":""},
+{"id":"mtb210","cat":"mtb26","nom":"26","inch":"26×2.10","french":"","w":54,"bsd":559,"type":"HE","tube":"26×1.50-2.125 チューブ","valve":"米式・仏式","note":""},
+{"id":"mtb225","cat":"mtb26","nom":"26","inch":"26×2.25","french":"","w":57,"bsd":559,"type":"HE","tube":"26×1.95-2.40 チューブ","valve":"米式・仏式","note":""},
+{"id":"mtb29a","cat":"mtb29","nom":"29","inch":"29×2.10","french":"","w":54,"bsd":622,"type":"","tube":"29×1.75-2.40 チューブ","valve":"仏式・米式","note":"リム径は700Cと同じ622です。ただしタイヤが太いので、700C用の細いチューブは使えません。"},
+{"id":"mtb29b","cat":"mtb29","nom":"29","inch":"29×2.25","french":"","w":57,"bsd":622,"type":"","tube":"29×1.75-2.40 チューブ","valve":"仏式・米式","note":""},
+{"id":"mtb29c","cat":"mtb29","nom":"29","inch":"29×2.35","french":"","w":60,"bsd":622,"type":"","tube":"29×1.90-2.40 チューブ","valve":"仏式・米式","note":""},
+{"id":"old597","cat":"old","nom":"26","inch":"26×1 1/4","french":"650","w":32,"bsd":597,"type":"WO","tube":"26×1 1/4 チューブ（入手難）","valve":"英式","note":"古い英式スポーツ車のサイズで、現在は入手が難しくなっています。"},
+{"id":"old584","cat":"old","nom":"26","inch":"26×1 1/2","french":"650×37B","w":37,"bsd":584,"type":"WO","tube":"650B用チューブ（27.5×1.50-2.10 など）","valve":"英式・仏式","note":"今の650B（リム径584）と同じリム径です。"},
+{"id":"old571","cat":"old","nom":"26","inch":"26×1 3/4（シュウィン）","french":"650×45C","w":47,"bsd":571,"type":"","tube":"650C用チューブ","valve":"米式が多い","note":"小数表記の26×1.75（リム径559）とは別物です。米国の古いクルーザーなど。"},
+{"id":"old642","cat":"old","nom":"28","inch":"28×1 3/8","french":"","w":37,"bsd":642,"type":"WO","tube":"28×1 3/8 チューブ（入手難）","valve":"英式","note":"古いオランダ式のサイズです。700C（622）とも28×1 1/2（635）とも別物です。"}
+];
+var CATS = [
+{"id":"mamachari","label":"ママチャリ・シティサイクル"},
+{"id":"kids","label":"子ども用・ジュニア"},
+{"id":"minivelo","label":"小径車・ミニベロ"},
+{"id":"road","label":"ロード・クロスバイク（700C）"},
+{"id":"gravel","label":"650B・27.5インチ"},
+{"id":"mtb26","label":"マウンテンバイク（26インチ）"},
+{"id":"mtb29","label":"29er（29インチMTB）"},
+{"id":"old","label":"旧規格・レアサイズ"}
+];
+var TRAPS = {
+"26":{"title":"「26インチ」はリム径が5種類あります","rows":[[559,"小数表記 26×1.50〜（MTBなど）"],[571,"650C／シュウィン 26×1 3/4"],[584,"650B／26×1 1/2"],[590,"26×1 3/8（ママチャリ）"],[597,"26×1 1/4（旧英式）"]]},
+"27":{"title":"27インチと27.5インチ・700Cは別物です","rows":[[630,"27インチ（27×1 1/4・1 3/8）"],[584,"27.5インチ（650B）"],[622,"700C"]]},
+"27.5":{"title":"27.5インチと27インチ・700Cは別物です","rows":[[584,"27.5インチ（650B）"],[630,"27インチ"],[622,"700C"]]},
+"28":{"title":"「28インチ」はリム径が3種類あります","rows":[[622,"700C"],[635,"28×1 1/2（700B）"],[642,"28×1 3/8（旧オランダ式）"]]},
+"29":{"title":"29インチのリムは700Cと同じ622です","rows":[[622,"700C／29インチ／28インチの一部"]]},
+"700":{"title":"700Cと27インチ・700Bは別物です","rows":[[622,"700C"],[630,"27インチ"],[635,"700B（28×1 1/2）"]]},
+"650":{"title":"「650」はリム径が3種類あります","rows":[[571,"650C"],[584,"650B"],[590,"650A"]]},
+"24":{"title":"「24インチ」はリム径が2種類あります","rows":[[507,"小数表記（子ども用・ジュニアMTB）"],[540,"24×1 3/8（ママチャリ系）"]]},
+"22":{"title":"「22インチ」はリム径が2種類あります","rows":[[456,"小数表記（子ども用）"],[489,"22×1 3/8"]]},
+"20":{"title":"「20インチ」はリム径が2種類あります","rows":[[406,"小数表記（子ども用・BMX・小径車）"],[451,"20×1 3/8（小径車）"]]},
+"16":{"title":"「16インチ」はリム径が2種類あります","rows":[[305,"小数表記（子ども用）"],[349,"16×1 3/8（折りたたみ自転車）"]]}
+};
+/*DATA-END*/
+
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function displayName(e){return e.french?e.french:(e.inch||'')}
+function isFraction(e){return /×\d+ \d+\/\d+/.test(e.inch)||/×\d+\/\d+/.test(e.inch)}
+
+function fillCats(){
+  $('cat-select').innerHTML=CATS.map(function(c){return '<option value="'+c.id+'">'+esc(c.label)+'</option>'}).join('');
+}
+function fillSizes(catId,selectedId){
+  var list=SIZES.filter(function(e){return e.cat===catId});
+  $('size-select').innerHTML=list.map(function(e){
+    var label=(e.inch?e.inch+'　':'')+(e.french?e.french+'　':'')+'（ETRTO '+e.w+'-'+e.bsd+'）';
+    return '<option value="'+e.id+'"'+(e.id===selectedId?' selected':'')+'>'+esc(label)+'</option>';
+  }).join('');
+}
+function warningsFor(e){
+  var warns=[];
+  var trap=TRAPS[e.nom];
+  if(trap&&trap.rows.length>1){
+    var others=trap.rows.filter(function(r){return r[0]!==e.bsd}).map(function(r){return 'リム径'+r[0]+'mm（'+r[1]+'）'}).join('、');
+    warns.push('同じ「'+e.nom+'インチ／'+e.nom+'系」でも、ほかに '+others+' があり、<strong>互換性はありません</strong>。買うときはインチ表記ではなく、ETRTO後ろのリム径（このタイヤは '+e.bsd+'mm）が一致するものを選んでください。');
+  }
+  if(isFraction(e)){
+    warns.push('分数表記（'+esc(e.inch)+'）と小数表記は、数字が同じでも別規格です。たとえば「1 3/8」と「1.375」は同じ計算になりますが、タイヤとしては互換性がありません。');
+  }
+  if(e.type==='WO'){
+    warns.push('このサイズは <strong>WO（ワイヤードオン）</strong> 規格です。見た目が似たHE規格のタイヤ・リムとは互換性がないので、タイヤ側面の「WO／HE」表記も合わせて確認してください。');
+  }
+  if(e.type==='HE'){
+    warns.push('このサイズは <strong>HE（ビードクリンチャー）</strong> 規格です。見た目が似たWO規格のタイヤ・リムとは互換性がありません。');
+  }
+  return warns;
+}
+function renderResult(e){
+  var rows='';
+  rows+='<tr><th>ETRTO（国際規格）</th><td><strong>'+e.w+'-'+e.bsd+'</strong>（幅 '+e.w+'mm × リム径 '+e.bsd+'mm）</td></tr>';
+  if(e.inch) rows+='<tr><th>インチ表記</th><td>'+esc(e.inch)+'</td></tr>';
+  if(e.french) rows+='<tr><th>フランス表記</th><td>'+esc(e.french)+'</td></tr>';
+  if(e.type) rows+='<tr><th>ビード規格</th><td>'+esc(e.type)+(e.type==='WO'?'（ワイヤードオン）':e.type==='HE'?'（ビードクリンチャー）':'')+'</td></tr>';
+  var warns=warningsFor(e);
+  var warnHtml=warns.length?'<div class="warn"><strong>⚠ 買い間違い注意</strong><ul>'+warns.map(function(w){return '<li>'+w+'</li>'}).join('')+'</ul></div>':'';
+  var noteHtml=e.note?'<p class="note" style="margin-top:12px">※ '+esc(e.note)+'</p>':'';
+  $('result').innerHTML=
+    '<p style="margin:0 0 4px">ETRTO（タイヤ幅 − リム径）</p>'+
+    '<div class="etrto-big">'+e.w+'<span>-'+e.bsd+'</span></div>'+
+    '<table class="spec-table">'+rows+'</table>'+
+    warnHtml+
+    '<div class="tube-box"><p><strong>🧦 適合チューブ：</strong>'+esc(e.tube)+'</p>'+
+    '<p><strong>🔧 バルブ形式：</strong>'+esc(e.valve)+'</p>'+
+    '<p class="note">チューブは「タイヤのETRTOとリム径が一致し、適応幅にタイヤ幅が入っているもの」を選んでください。バルブはリムのバルブ穴に合う形式が必要です（仏式は細いので、英式・米式の穴にもアダプター等で対応できる場合がありますが、英式・米式は仏式の穴には入りません）。</p></div>'+
+    noteHtml;
+}
+function renderBsdOnly(w,bsd){
+  var same=SIZES.filter(function(e){return e.bsd===bsd});
+  if(!same.length){
+    $('result').innerHTML='<div class="empty">リム径 '+bsd+'mm は、このツールのデータにない規格です。<br>一般的なリム径は 254 / 305 / 349 / 355 / 406 / 451 / 456 / 489 / 507 / 540 / 559 / 571 / 584 / 590 / 597 / 622 / 630 / 635 / 642 mm です。数字を読み間違えていないか、タイヤ側面をもう一度確認してみてください。</div>';
+    return;
+  }
+  var names=[]; same.forEach(function(e){var n=displayName(e); if(names.indexOf(n)<0)names.push(n)});
+  var exact=same.filter(function(e){return e.w===w});
+  var head=exact.length
+    ? '<p style="margin:0 0 4px">入力されたETRTOに一致するサイズが見つかりました</p><div class="etrto-big">'+w+'<span>-'+bsd+'</span></div>'
+    : '<p style="margin:0 0 4px">リム径 '+bsd+'mm の規格は見つかりましたが、幅 '+w+'mm の登録はありませんでした（幅は製品ごとに幅広くあります）。このリム径の代表的な表記は次のとおりです。</p><div class="etrto-big">―<span>-'+bsd+'</span></div>';
+  var listHtml='<table class="spec-table"><tr><th>このリム径の主な表記</th><td>'+same.map(function(e){return esc(displayName(e))+'（'+e.w+'-'+e.bsd+'）'}).join('、')+'</td></tr></table>';
+  var tubeHtml='<div class="tube-box"><p><strong>🧦 チューブの選び方：</strong>リム径 '+bsd+'mm 用で、適応幅に '+w+'mm が入るものを選んでください。'+(exact.length?'このサイズでは「'+esc(exact[0].tube)+'」が目安です。':'')+'</p><p><strong>🔧 バルブ形式：</strong>'+(exact.length?esc(exact[0].valve):'自転車の種類によって異なります（ママチャリ＝英式、ロードバイク＝仏式、MTB＝米式・仏式が多い）')+'</p></div>';
+  $('result').innerHTML=head+listHtml+
+    '<div class="warn"><strong>⚠ 確認ポイント</strong><ul><li>タイヤが付くかどうかは、幅よりもまず<strong>リム径（後ろの数字）が完全一致</strong>するかが決め手です。</li><li>幅はリムの内幅とフレームのすき間に合う範囲で変えられますが、極端に違う幅は避けてください。</li></ul></div>'+tubeHtml;
+}
+
+$('cat-select').addEventListener('change',function(){fillSizes(this.value);var first=$('size-select').value;var e=SIZES.find(function(x){return x.id===first});if(e)renderResult(e)});
+$('size-select').addEventListener('change',function(){var e=SIZES.find(function(x){return x.id===$('size-select').value});if(e)renderResult(e)});
+$('etrto-btn').addEventListener('click',function(){
+  var w=parseInt($('etrto-w').value,10), bsd=parseInt($('etrto-bsd').value,10);
+  if(!w||!bsd){$('etrto-msg').textContent='タイヤ幅とリム径の両方を入力してください。';return}
+  $('etrto-msg').textContent='';
+  var exact=SIZES.find(function(e){return e.w===w&&e.bsd===bsd});
+  if(exact){ $('cat-select').value=exact.cat; fillSizes(exact.cat,exact.id); renderResult(exact); }
+  else renderBsdOnly(w,bsd);
+  $('result').scrollIntoView({behavior:'smooth',block:'start'});
+});
+
+// Init: default to the most common mamachari size
+fillCats();
+$('cat-select').value='mamachari';
+fillSizes('mamachari','wo26');
+renderResult(SIZES.find(function(e){return e.id==='wo26'}));
+</script>
+</body>
+</html>
